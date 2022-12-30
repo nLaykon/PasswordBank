@@ -9,6 +9,6 @@ If you have a way to improve this and or make it more secure, open an Improvemen
 
 
 
-ToDo: 
+**ToDo:** 
 
 Add a GUI to interact with the scripts instead of Commandline
