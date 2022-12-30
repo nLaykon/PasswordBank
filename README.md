@@ -11,4 +11,4 @@ If you have a way to improve this and or make it more secure, open an Improvemen
 
 **ToDo:** 
 
-Add a GUI to interact with the scripts instead of Commandline
+Make GUI More Functional
