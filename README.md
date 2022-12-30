@@ -6,7 +6,7 @@ ReadPass.py will pull the encrypted passwords from the database, decrypt them an
 
 If you have a way to improve this and or make it more secure, open an Improvement in the Issues section and i'll try to add it.
 
-
+**YES I KNOW THIS IS A MESS, MY HEADS HURTING SO MUCH FROM THIS**
 
 
 **ToDo:** 
