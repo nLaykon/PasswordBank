@@ -8,6 +8,8 @@ If you have a way to improve this and or make it more secure, open an Improvemen
 
 **YES I KNOW THIS IS A MESS, MY HEADS HURTING SO MUCH FROM THIS**
 
+ill clean up the code, comment it, fix a few things and upload it at some point
+
 
 **ToDo:** 
 
