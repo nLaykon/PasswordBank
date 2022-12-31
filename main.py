@@ -1,3 +1,8 @@
+#
+#   THIS IS VERY MUCH SO A WORK IN PROGRESS
+#   DONT EXPECT THIS TO BE 100% FUNCTIONAL
+#
+
 from tkinter import *
 from tkinter import ttk
 import GenPass as gp
@@ -156,31 +161,16 @@ canvas.grid(row=0, column=0, sticky="news")
 
 vsb = ttk.Scrollbar(frame_canvas, orient="vertical", command=canvas.yview)
 vsb.grid(row=0, column=1, sticky='ns')
-canvas.configure(yscrollcommand=vsb.set)
+canvas.configure(yscrollcommand=vsb.set, yscrollincrement=5, scrollregion=canvas.bbox("all"))
 frame_buttons = Frame(canvas)
 frame_buttons.config(background='grey18', borderwidth=0, highlightthickness=0)
 canvas.create_window((0, 0), window=frame_buttons, anchor='nw')
-canvas.config(scrollregion=canvas.bbox("all"))
+#canvas.config(scrollregion=canvas.bbox("all"))
 style = ttk.Style(frame_buttons)
 style.configure('TLabel', background='grey18', foreground='Red')
 style.configure('TFrame', background='grey18')
 
-# Add 9-by-5 buttons to the frame
-
-
-
-# Update buttons frames idle tasks to let tkinter calculate buttons sizes
 frame_buttons.update_idletasks()
-
-# Resize the canvas frame to show exactly 5-by-5 buttons and the scrollbar
-
-
-#myFrame = scrollingFrame(win, background = 'grey25')
-#myFrame.grid(row=0, column=0, sticky=N+S+E+W)
-#myFrame.config(height=1, width=1)
-#myFrame.place(x=225, y=380, anchor='center')
-#myScrollbar = ttk.Scrollbar(win).grid(row=1,column=0,columnspan=2)
-
 
 def sendToDatabase():
     phase1WebsiteText = str(webSiteEntry.get())
@@ -208,30 +198,24 @@ def sendToDatabase():
 def readData():
     currentRow = 0
     for row in cur.execute("SELECT website, email, password FROM passwords ORDER BY website"):
-        decryptedWebsite = fernet.decrypt(row[0])
-        decryptedEmail = fernet.decrypt(row[1])
-        decryptedPassword = fernet.decrypt(row[2])
-        strDecryptedWebsite = decryptedWebsite.decode("utf-8")
-        strDecryptedEmail = decryptedEmail.decode("utf-8")
-        strDecryptedPassword = decryptedPassword.decode("utf-8")
-        print(decryptedWebsite.decode("utf-8") + "    " + decryptedEmail.decode("utf-8") + "    " + decryptedPassword.decode("utf-8"))
-        #printText = ttk.Label(frame_buttons, text=(f'{strDecryptedWebsite}   {strDecryptedEmail}   {strDecryptedPassword}')).grid()
+        strDecryptedWebsite = gp.decryptData(row[0])
+        strDecryptedEmail = gp.decryptData(row[1])
+        strDecryptedPassword = gp.decryptData(row[2])
+
         colum1 = ttk.Label(frame_buttons, text=(strDecryptedWebsite)).grid(column=1, row=currentRow)
         colum2 = ttk.Label(frame_buttons, text=(strDecryptedEmail)).grid(column=2, row=currentRow)
         colum3 = ttk.Label(frame_buttons, text=(strDecryptedPassword)).grid(column=3, row=currentRow)
-
         currentRow = currentRow+1
-        
 
 def generatePassword():
     length = int(passLength.get())
     passwordText=gp.genPassword(length)
     passwordLabel["text"] = (f'{passwordText}')
-#width=28
+
 passwordLabel = Label(win, text="", font= ('Century 12'), width=28)
 passwordLabel.grid()
 passwordLabel.place(x=225, y=160, anchor='center')
-#Create Entry Widgets
+
 webSiteLabel= ttk.Label(win,font=('Century 12'),width=7, text="Website", anchor='center', background='grey14', foreground='Red')
 webSiteLabel.grid()
 webSiteLabel.place(x=225,anchor='center', y=10)
@@ -261,7 +245,6 @@ passLengthLabel.place(x=227, y=200, anchor='w')
 passLength.grid()
 passLength.place(x=223, y=200, anchor='e')
 
-#Create a button to display the text of entry widget
 GenerateButton= ttk.Button(win, text="Generate", command= generatePassword, width=8)
 GenerateButton.grid()
 GenerateButton.place(x=225, y=230, anchor='center')
